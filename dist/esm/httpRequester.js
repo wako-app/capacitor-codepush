@@ -61,21 +61,21 @@ export class HttpRequester {
      */
     getHttpMethodName(verb) {
         switch (verb) {
-            case 0 /* GET */:
+            case 0 /* Http.Verb.GET */:
                 return "GET";
-            case 4 /* DELETE */:
+            case 4 /* Http.Verb.DELETE */:
                 return "DELETE";
-            case 1 /* HEAD */:
+            case 1 /* Http.Verb.HEAD */:
                 return "HEAD";
-            case 8 /* PATCH */:
+            case 8 /* Http.Verb.PATCH */:
                 return "PATCH";
-            case 2 /* POST */:
+            case 2 /* Http.Verb.POST */:
                 return "POST";
-            case 3 /* PUT */:
+            case 3 /* Http.Verb.PUT */:
                 return "PUT";
-            case 5 /* TRACE */:
-            case 6 /* OPTIONS */:
-            case 7 /* CONNECT */:
+            case 5 /* Http.Verb.TRACE */:
+            case 6 /* Http.Verb.OPTIONS */:
+            case 7 /* Http.Verb.CONNECT */:
             default:
                 return null;
         }
