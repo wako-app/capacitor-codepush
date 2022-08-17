@@ -42,7 +42,6 @@ repositories {
         dirs 'libs'
     }
     google()
-    jcenter()
     mavenCentral()
 }
 
