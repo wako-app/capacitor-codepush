@@ -67,7 +67,7 @@
   },
   "dependencies": {
     "@capacitor/core": "^5.0.4",
-    "code-push": "^4.0.5"
+    "code-push": "4.0.5"
   },
   "peerDependencies": {
     "@capacitor-community/http": "^2.0.0-0",
