@@ -7,10 +7,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-import { AcquisitionManager } from "code-push/script/acquisition-sdk";
+import { Device } from "@capacitor/device";
+import { AcquisitionManager, } from "code-push/script/acquisition-sdk";
 import { HttpRequester } from "./httpRequester";
 import { NativeAppInfo } from "./nativeAppInfo";
-import { Device } from "@capacitor/device";
 /**
  * Interacts with the CodePush Acquisition SDK.
  */
@@ -21,13 +21,14 @@ export class Sdk {
     static getAcquisitionManager(userDeploymentKey, contentType) {
         return __awaiter(this, void 0, void 0, function* () {
             const resolveManager = () => {
-                if (userDeploymentKey !== Sdk.DefaultConfiguration.deploymentKey || contentType) {
+                if (userDeploymentKey !== Sdk.DefaultConfiguration.deploymentKey ||
+                    contentType) {
                     var customConfiguration = {
                         deploymentKey: userDeploymentKey || Sdk.DefaultConfiguration.deploymentKey,
                         serverUrl: Sdk.DefaultConfiguration.serverUrl,
                         ignoreAppVersion: Sdk.DefaultConfiguration.ignoreAppVersion,
                         appVersion: Sdk.DefaultConfiguration.appVersion,
-                        clientUniqueId: Sdk.DefaultConfiguration.clientUniqueId
+                        clientUniqueId: Sdk.DefaultConfiguration.clientUniqueId,
                     };
                     var requester = new HttpRequester(contentType);
                     var customAcquisitionManager = new AcquisitionManager(requester, customConfiguration);
@@ -69,7 +70,7 @@ export class Sdk {
                     serverUrl,
                     ignoreAppVersion: false,
                     appVersion,
-                    clientUniqueId: device.uuid
+                    clientUniqueId: device.identifier,
                 };
                 if (deploymentKey) {
                     Sdk.DefaultAcquisitionManager = new AcquisitionManager(new HttpRequester(), Sdk.DefaultConfiguration);
@@ -102,7 +103,8 @@ export class Sdk {
                 acquisitionManager.reportStatusDownload(pkg, callback);
             }
             catch (e) {
-                callback && callback(new Error("An error occured while reporting the download status. " + e));
+                callback &&
+                    callback(new Error("An error occured while reporting the download status. " + e));
             }
         });
     }

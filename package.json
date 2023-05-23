@@ -10,11 +10,11 @@
     "registry": "https://npm.pkg.github.com/"
   },
   "scripts": {
-    "lint": "npm run prettier -- --check && npm run swiftlint -- lint",
+    "lint": "pnpm prettier -- --check && pnpm swiftlint -- lint",
     "prettier": "prettier \"**/*.{css,html,ts,js,java}\"",
     "swiftlint": "node-swiftlint",
-    "build": "npm run clean && tsc && rollup -c rollup.config.js",
-    "clean": "rimraf ./dist",
+    "build": "pnpm clean && tsc && rollup -c rollup.config.js",
+    "clean": "rm -rf ./dist",
     "watch": "tsc --watch",
     "prepublishOnly": "npm run build"
   },
@@ -30,11 +30,11 @@
   "license": "MIT",
   "devDependencies": {
     "@capacitor-community/http": "^2.0.0-0",
-    "@capacitor/cli": "^4.0.1",
-    "@capacitor/device": "^4.0.1",
-    "@capacitor/dialog": "^4.0.1",
-    "@capacitor/filesystem": "^4.0.1",
-    "@commitlint/cli": "^11.0.0",
+    "@capacitor/cli": "^5.0.4",
+    "@capacitor/device": "^5.0.2",
+    "@capacitor/dialog": "^5.0.2",
+    "@capacitor/filesystem": "^5.0.2",
+    "@commitlint/cli": "^17.6.3",
     "@commitlint/config-conventional": "^11.0.0",
     "@rollup/plugin-node-resolve": "^11.1.0",
     "@semantic-release/git": "^9.0.0",
@@ -46,14 +46,14 @@
     "@types/power-assert": "^1.5.3",
     "@types/q": "^1.5.4",
     "archiver": "^5.2.0",
-    "body-parser": "^1.19.0",
+    "body-parser": "^1.20.2",
     "del": "^6.0.0",
     "express": "^4.17.1",
     "gulp": "^4.0.2",
     "gulp-insert": "^0.5.0",
     "gulp-tslint": "^8.1.4",
     "gulp-typescript": "^5.0.1",
-    "husky": "^8.0.1",
+    "husky": "^8.0.3",
     "mkdirp": "^1.0.4",
     "mocha": "^8.2.1",
     "mocha-junit-reporter": "^2.0.0",
@@ -66,14 +66,15 @@
     "typescript": "~4.7.3"
   },
   "dependencies": {
-    "code-push": "^4.0.5"
+    "@capacitor/core": "^5.0.4",
+    "code-push": "^4.1.2"
   },
   "peerDependencies": {
     "@capacitor-community/http": "^2.0.0-0",
-    "@capacitor/core": "^4.0.1",
-    "@capacitor/device": "^4.0.1",
-    "@capacitor/dialog": "^4.0.1",
-    "@capacitor/filesystem": "^4.0.1"
+    "@capacitor/core": "^5.0.4",
+    "@capacitor/device": "^5.0.2",
+    "@capacitor/dialog": "^5.0.2",
+    "@capacitor/filesystem": "^5.0.2"
   },
   "capacitor": {
     "android": {

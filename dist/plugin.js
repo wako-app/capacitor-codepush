@@ -1,4 +1,4 @@
-var capacitorPlugin = (function (exports, acquisitionSdk, filesystem, core, http, device, dialog) {
+var capacitorPlugin = (function (exports, acquisitionSdk, filesystem, core, device, http, dialog) {
     'use strict';
 
     /**
@@ -73,7 +73,6 @@ var capacitorPlugin = (function (exports, acquisitionSdk, filesystem, core, http
     /**
      * Defines the available install modes for updates.
      */
-    exports.InstallMode = void 0;
     (function (InstallMode) {
         /**
          * The update will be applied to the running application immediately. The application will be reloaded with the new content immediately.
@@ -450,7 +449,7 @@ var capacitorPlugin = (function (exports, acquisitionSdk, filesystem, core, http
             const headers = {
                 "X-CodePush-Plugin-Name": "cordova-plugin-code-push",
                 "X-CodePush-Plugin-Version": "1.11.13",
-                "X-CodePush-SDK-Version": "3.1.5"
+                "X-CodePush-SDK-Version": "3.1.5",
             };
             if (this.contentType) {
                 headers["Content-Type"] = this.contentType;
@@ -458,7 +457,7 @@ var capacitorPlugin = (function (exports, acquisitionSdk, filesystem, core, http
             const options = {
                 method: methodName,
                 url,
-                headers
+                headers,
             };
             if (methodName === "GET") {
                 options.params = requestBody;
@@ -466,10 +465,13 @@ var capacitorPlugin = (function (exports, acquisitionSdk, filesystem, core, http
             else {
                 options.data = requestBody;
             }
-            http.Http.request(options).then((nativeRes) => {
+            core.CapacitorHttp.request(options).then((nativeRes) => {
                 if (typeof nativeRes.data === "object")
                     nativeRes.data = JSON.stringify(nativeRes.data);
-                var response = { statusCode: nativeRes.status, body: nativeRes.data };
+                var response = {
+                    statusCode: nativeRes.status,
+                    body: nativeRes.data,
+                };
                 requestCallback && requestCallback(null, response);
             });
         }
@@ -479,21 +481,21 @@ var capacitorPlugin = (function (exports, acquisitionSdk, filesystem, core, http
          */
         getHttpMethodName(verb) {
             switch (verb) {
-                case 0 /* Http.Verb.GET */:
+                case acquisitionSdk.Http.Verb.GET:
                     return "GET";
-                case 4 /* Http.Verb.DELETE */:
+                case acquisitionSdk.Http.Verb.DELETE:
                     return "DELETE";
-                case 1 /* Http.Verb.HEAD */:
+                case acquisitionSdk.Http.Verb.HEAD:
                     return "HEAD";
-                case 8 /* Http.Verb.PATCH */:
+                case acquisitionSdk.Http.Verb.PATCH:
                     return "PATCH";
-                case 2 /* Http.Verb.POST */:
+                case acquisitionSdk.Http.Verb.POST:
                     return "POST";
-                case 3 /* Http.Verb.PUT */:
+                case acquisitionSdk.Http.Verb.PUT:
                     return "PUT";
-                case 5 /* Http.Verb.TRACE */:
-                case 6 /* Http.Verb.OPTIONS */:
-                case 7 /* Http.Verb.CONNECT */:
+                case acquisitionSdk.Http.Verb.TRACE:
+                case acquisitionSdk.Http.Verb.OPTIONS:
+                case acquisitionSdk.Http.Verb.CONNECT:
                 default:
                     return null;
             }
@@ -519,13 +521,14 @@ var capacitorPlugin = (function (exports, acquisitionSdk, filesystem, core, http
         static getAcquisitionManager(userDeploymentKey, contentType) {
             return __awaiter$2(this, void 0, void 0, function* () {
                 const resolveManager = () => {
-                    if (userDeploymentKey !== Sdk.DefaultConfiguration.deploymentKey || contentType) {
+                    if (userDeploymentKey !== Sdk.DefaultConfiguration.deploymentKey ||
+                        contentType) {
                         var customConfiguration = {
                             deploymentKey: userDeploymentKey || Sdk.DefaultConfiguration.deploymentKey,
                             serverUrl: Sdk.DefaultConfiguration.serverUrl,
                             ignoreAppVersion: Sdk.DefaultConfiguration.ignoreAppVersion,
                             appVersion: Sdk.DefaultConfiguration.appVersion,
-                            clientUniqueId: Sdk.DefaultConfiguration.clientUniqueId
+                            clientUniqueId: Sdk.DefaultConfiguration.clientUniqueId,
                         };
                         var requester = new HttpRequester(contentType);
                         var customAcquisitionManager = new acquisitionSdk.AcquisitionManager(requester, customConfiguration);
@@ -567,7 +570,7 @@ var capacitorPlugin = (function (exports, acquisitionSdk, filesystem, core, http
                         serverUrl,
                         ignoreAppVersion: false,
                         appVersion,
-                        clientUniqueId: device$1.uuid
+                        clientUniqueId: device$1.identifier,
                     };
                     if (deploymentKey) {
                         Sdk.DefaultAcquisitionManager = new acquisitionSdk.AcquisitionManager(new HttpRequester(), Sdk.DefaultConfiguration);
@@ -600,7 +603,8 @@ var capacitorPlugin = (function (exports, acquisitionSdk, filesystem, core, http
                     acquisitionManager.reportStatusDownload(pkg, callback);
                 }
                 catch (e) {
-                    callback && callback(new Error("An error occured while reporting the download status. " + e));
+                    callback &&
+                        callback(new Error("An error occured while reporting the download status. " + e));
                 }
             });
         }
@@ -1667,5 +1671,5 @@ var capacitorPlugin = (function (exports, acquisitionSdk, filesystem, core, http
 
     return exports;
 
-}({}, acquisitionSdk, filesystem, capacitorExports, http, device, dialog));
+}({}, acquisitionSdk, filesystem, capacitorExports, device, http, dialog));
 //# sourceMappingURL=plugin.js.map
