@@ -45,8 +45,7 @@ This Capacitor plugin does not work with Capacitor v2 or older versions.
 Once you've followed the general-purpose ["getting started"](https://docs.microsoft.com/en-us/appcenter/distribution/codepush/) instructions for setting up your CodePush account, you can start CodePush-ifying your Capacitor app by running the following command from within your app's root directory:
 
 ```shell
-pnpm add @capacitor-community/httpp@2.0.0-0 @capacitor/device @capacitor/dialog @capacitor/filesystem
-pnpm add code-push -D
+pnpm add github:wako-app/capacitor-codepush
 npx cap sync
 ```
 
